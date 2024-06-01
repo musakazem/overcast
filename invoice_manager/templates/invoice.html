@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        @page {
+            size: 10in 8.5in; /* Custom page size */
+            margin: 0.2in; /* Set margins */
+        }
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            font-size: 16px;
+            line-height: 24px;
+            color: #555;
+        }
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+            border-collapse: collapse;
+        }
+        .invoice-box table td {
+            padding: 5px;
+            vertical-align: top;
+        }
+        .invoice-box table tr td:nth-child(2) {
+            text-align: left;
+        }
+        .invoice-box table tr.top table td {
+            padding-bottom: 20px;
+        }
+        .invoice-box table tr.top table td.title {
+            font-size: 45px;
+            line-height: 45px;
+            color: #333;
+        }
+        .invoice-box table tr.information table td {
+            padding-bottom: 40px;
+        }
+        .invoice-box table tr.heading td {
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+        .invoice-box table tr.details td {
+            padding-bottom: 20px;
+        }
+        .invoice-box table tr.item td {
+            border-bottom: 1px solid #eee;
+        }
+        .invoice-box table tr.item.last td {
+            border-bottom: none;
+        }
+        .invoice-box table tr.total td:nth-child(2) {
+            border-top: 2px solid #eee;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .footer .social {
+            list-style-type: none;
+            padding: 0;
+        }
+        .footer .social li {
+            display: inline;
+            margin: 0 10px;
+        }
+        .footer .social li a {
+            text-decoration: none;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                <img src="your-logo-url-here.png" alt="Overcast logo" style="width:100%; max-width:300px;">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="information">
+                <td colspan="4">
+                    <table>
+                        <tr>
+                            <td>
+                                <b>Customer Info:</b><br>
+                                {{phone}}<br>
+                                {{address}}
+                            </td>
+                            <td>
+                                Invoice No: <br>
+                                Date: {{date}}<br>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="heading">
+                <td>Serial No.</td>
+                <td>Product Description</td>
+                <td>Size/Color</td>
+                <td>Quantity</td>
+                <td>Unit Price</td>
+                <td>Total</td>
+            </tr>
+            {% for item in items %}
+            <tr class="item">
+                <td>{{item.id_counter}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.details}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.rate}}</td>
+                <td>{{item.price}}</td>
+            </tr>
+            {% endfor %}
+            <!-- Repeat item rows as needed -->
+            <tr class="total">
+                <td colspan="4"></td>
+                <td>Subtotal:</td>
+                <td>{{subtotal}}</td>
+            </tr>
+            <tr class="total">
+                <td colspan="4"></td>
+                <td>Delivery Charge:</td>
+                <td>{{delivery_charge}}</td>
+            </tr>
+            <tr class="total">
+                <td colspan="4"></td>
+                <td>Advance:</td>
+                <td>{{advance}}</td>
+            </tr>
+            <tr class="total">
+                <td colspan="4"></td>
+                <td><b>Net Payment:</b></td>
+                <td><b>{{net}}</b></td>
+            </tr>
+        </table>
+        <div style="margin-top: 20px;">
+            {% if cash_on_delivery %}
+            <label>
+                <input type="checkbox" checked> Cash On Delivery
+            </label>
+            {% else %}
+            <label>
+                <input type="checkbox"> Cash On Delivery
+            </label>
+            {% endif %}
+            <label style="margin-left: 20px;">
+                <input type="checkbox"> Condition
+            </label>
+            <p>Note: Please check your product before making payment</p>
+        </div>
+        <div style="margin-top: 20px;">
+            <p>Authorized Signature: ________________________</p>
+        </div>
+        <p>Thank you for your purchase</p>
+    </div>
+    <div class="footer">
+        <ul class="social">
+            <li><a href="http://facebook.com/your-profile" target="_blank">Overcast</a></li>
+            <li><a href="http://twitter.com/your-profile" target="_blank">@overcast001</a></li>
+            <li><a href="http://instagram.com/your-profile" target="_blank">www.overcastattire.com</a></li>
+            <li><a href="http://linkedin.com/your-profile" target="_blank">01763-988600, 01685-4471550</a></li>
+            <li><a href="http://youtube.com/your-profile" target="_blank">naovercast2021@gmail.com</a></li>
+        </ul>
+    </div>
+</body>
+</html>
