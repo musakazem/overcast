@@ -14,7 +14,7 @@ class User(AbstractUser, PermissionsMixin):
     username = models.CharField(
         _("username"), max_length=150, unique=True, validators=[username_validator], db_index=True
     )
-    first_name = models.CharField(verbose_name=_("first name"), max_length=32, null=True, blank=True)
+    first_name = models.CharField(verbose_name=_("name"), max_length=32, default="")
     last_name = models.CharField(verbose_name=_("last name"), max_length=64, null=True, blank=True)
     phone_number = models.CharField(
         verbose_name=_("phone number"),
@@ -33,16 +33,11 @@ class User(AbstractUser, PermissionsMixin):
     )
     address = models.TextField(verbose_name="address")
 
-
-    @property
-    def full_name(self):
-        return f"{self.first_name or ''} {self.last_name or ''}".strip()
-
     def __str__(self):
-        return _(f"{self.full_name if self.full_name else ''} {self.phone_number}")
+        return _(f"{self.first_name} {self.phone_number}")
 
     def save(self, *args, **kwargs):
         if not self.username:
             self.username = self.phone_number
 
-        super().save(*args, **kwargs)
+        return super().save(*args, **kwargs)

@@ -13,6 +13,7 @@ class UserAdmin(admin.ModelAdmin):
             _("Personal info"),
             {
                 "fields": (
+                    "first_name",
                     "phone_number",
                     "address",
                 )

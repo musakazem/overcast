@@ -31,7 +31,7 @@ def generate_invoice_pdf(modeladmin, request, queryset):
             product_context.append({"product_id": id_counter, "name": product_name, "quantity": quantity, "rate": rate, "price": price, "details": details})
 
         html_string = render_to_string('invoice.html', {
-            "customer_name": obj.user.full_name,
+            "customer_name": obj.user.first_name,
             "date": obj.date,
             "items": product_context,
             "subtotal": obj.subtotal,
